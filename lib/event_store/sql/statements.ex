@@ -50,8 +50,8 @@ CREATE TABLE events
     event_type text NOT NULL,
     correlation_id text,
     causation_id text,
-    data bytea NOT NULL,
-    metadata bytea NULL,
+    data jsonb NOT NULL,
+    metadata jsonb NULL,
     created_at timestamp without time zone default (now() at time zone 'utc') NOT NULL
 );
 """
@@ -96,8 +96,8 @@ CREATE TABLE snapshots
     source_uuid text PRIMARY KEY NOT NULL,
     source_version bigint NOT NULL,
     source_type text NOT NULL,
-    data bytea NOT NULL,
-    metadata bytea NULL,
+    data jsonb NOT NULL,
+    metadata jsonb NULL,
     created_at timestamp without time zone default (now() at time zone 'utc') NOT NULL
 );
 """

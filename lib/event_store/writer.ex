@@ -6,6 +6,8 @@ defmodule EventStore.Writer do
   use GenServer
   require Logger
 
+  Postgrex.Types.define(EventStore.PostgrexTypes, [Postgrex.Extensions.JSONB], json: Poison)
+
   alias EventStore.{Subscriptions,RecordedEvent,Writer}
   alias EventStore.Storage.{Appender,QueryLatestEventId}
 
@@ -19,6 +21,7 @@ defmodule EventStore.Writer do
     storage_config =
       Application.get_env(:eventstore, EventStore.Storage)
       |> EventStore.Config.parse()
+      |> Keyword.merge(types: EventStore.PostgrexTypes)
 
     {:ok, conn} = Postgrex.start_link(storage_config)
 
